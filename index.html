@@ -449,18 +449,24 @@
     grid-template-columns:repeat(auto-fill, minmax(150px,1fr));
     gap:1rem;
   }
-  .card{
-    position:relative;
-    aspect-ratio:3/4.1;
-    border:1px solid var(--line);
-    border-radius:6px;
-    background:linear-gradient(165deg, var(--panel), var(--void-soft));
-    overflow:hidden;
-    padding:1rem;
-    display:flex; flex-direction:column; justify-content:flex-end;
-    cursor:default;
-  }
-  .card::before{
+.card{
+     position:relative;
+     aspect-ratio:3/4.1;
+     border:1px solid var(--line);
+     border-radius:6px;
+     background:linear-gradient(165deg, var(--panel), var(--void-soft));
+     overflow:hidden;
+     padding:1rem;
+     display:flex; flex-direction:column; justify-content:flex-end;
+     cursor:default;
+   }
+   .enemy-img{
+     width:100%;
+     height:auto;
+     object-fit:contain;
+     margin-bottom:0.5rem;
+   }
+   .card::before{
     content:"";
     position:absolute; inset:0;
     background:radial-gradient(120px 120px at 50% 30%, var(--card-glow, rgba(79,209,197,0.16)), transparent 70%);
@@ -676,35 +682,42 @@
   <h2 style="margin-top:1rem;">Everything down here is a slime.<br/>That should worry you more than it does.</h2>
   <p class="lede">The first rooms of the Tower are full of them — small, disposable-looking, and each one built to ruin a different plan. Hover a seal to hear what people have said about them. We're keeping the numbers to ourselves.</p>
 
-  <div class="grid">
-    <div class="card" style="--card-glow: rgba(179,74,74,0.22)" tabindex="0">
-      <div class="name">Bomb Slime</div>
-      <div class="hint">It only wants one thing. It only gets one chance at it.</div>
-    </div>
-    <div class="card" style="--card-glow: rgba(79,209,197,0.22)" tabindex="0">
-      <div class="name">Crystal Slime</div>
-      <div class="hint">Kind to its friends. That's usually the problem.</div>
-    </div>
-    <div class="card" style="--card-glow: rgba(179,74,74,0.18)" tabindex="0">
-      <div class="name">Hungry Slime</div>
-      <div class="hint">It doesn't fight to win. It fights to eat.</div>
-    </div>
-    <div class="card" style="--card-glow: rgba(201,162,75,0.2)" tabindex="0">
-      <div class="name">Shield Slime</div>
-      <div class="hint">Somebody in that formation has to stand in front.</div>
-    </div>
-    <div class="card" style="--card-glow: rgba(201,162,75,0.22)" tabindex="0">
-      <div class="name">Split Slime</div>
-      <div class="hint">Kill it and you'll immediately understand your mistake.</div>
-    </div>
-    <div class="card" style="--card-glow: rgba(79,209,197,0.2)" tabindex="0">
-      <div class="name">Treasure Slime</div>
-      <div class="hint">Blink and it's gone — and it took everything with it.</div>
-    </div>
-    <div class="card locked" tabindex="0">
-      <div class="name">??? — Boss</div>
-    </div>
-  </div>
+<div class="grid">
+     <div class="card" style="--card-glow: rgba(179,74,74,0.22)" tabindex="0">
+       <img src="bomb-slime.png" alt="Bomb Slime" class="enemy-img">
+       <div class="name">Bomb Slime</div>
+       <div class="hint">It only wants one thing. It only gets one chance at it.</div>
+     </div>
+     <div class="card" style="--card-glow: rgba(79,209,197,0.22)" tabindex="0">
+       <img src="crystal-slime.png" alt="Crystal Slime" class="enemy-img">
+       <div class="name">Crystal Slime</div>
+       <div class="hint">Kind to its friends. That's usually the problem.</div>
+     </div>
+     <div class="card" style="--card-glow: rgba(179,74,74,0.18)" tabindex="0">
+       <img src="hungry-slime.png" alt="Hungry Slime" class="enemy-img">
+       <div class="name">Hungry Slime</div>
+       <div class="hint">It doesn't fight to win. It fights to eat.</div>
+     </div>
+     <div class="card" style="--card-glow: rgba(201,162,75,0.2)" tabindex="0">
+       <img src="shield-slime.png" alt="Shield Slime" class="enemy-img">
+       <div class="name">Shield Slime</div>
+       <div class="hint">Somebody in that formation has to stand in front.</div>
+     </div>
+     <div class="card" style="--card-glow: rgba(201,162,75,0.22)" tabindex="0">
+       <img src="split-slime.png" alt="Split Slime" class="enemy-img">
+       <div class="name">Split Slime</div>
+       <div class="hint">Kill it and you'll immediately understand your mistake.</div>
+     </div>
+     <div class="card" style="--card-glow: rgba(79,209,197,0.2)" tabindex="0">
+       <img src="treasure-slime.png" alt="Treasure Slime" class="enemy-img">
+       <div class="name">Treasure Slime</div>
+       <div class="hint">Blink and it's gone — and it took everything with it.</div>
+     </div>
+     <div class="card locked" tabindex="0">
+       <img src="enemy-boss.png" alt="??? — Boss" class="enemy-img">
+       <div class="name">??? — Boss</div>
+     </div>
+   </div>
 </section>
 
 <!-- ================= ROADMAP ================= -->
