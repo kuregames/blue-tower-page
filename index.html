@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blue Tower Chronicle — The Tower is Still Being Forged</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cinzel+Decorative:wght@700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Cormorant+Garamond:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night: #080B1E;
+    --night-2: #0E1436;
+    --stone: #1B2350;
+    --stone-line: #2C3568;
+    --cyan: #6FE3FF;
+    --cyan-dim: #2E6E82;
+    --gold: #E8C169;
+    --parchment: #EDE6D6;
+    --ink-dim: #9BA3D0;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{height:100%;}
+  body{
+    background:
+      radial-gradient(ellipse at 50% 20%, #171E4A 0%, transparent 55%),
+      linear-gradient(180deg, var(--night) 0%, #050714 100%);
+    color:var(--parchment);
+    font-family:'EB Garamond', serif;
+    min-height:100vh;
+    overflow-x:hidden;
+    position:relative;
+  }
+
+  /* starfield */
+  .stars{ position:fixed; inset:0; z-index:0; pointer-events:none; }
+  .star{
+    position:absolute;
+    width:2px; height:2px;
+    background:var(--parchment);
+    border-radius:50%;
+    opacity:.5;
+    animation: twinkle 4s ease-in-out infinite;
+  }
+  @keyframes twinkle{
+    0%,100%{ opacity:.15; }
+    50%{ opacity:.9; }
+  }
+
+  /* embers */
+  .ember{
+    position:fixed;
+    bottom:-10px;
+    width:3px; height:3px;
+    border-radius:50%;
+    background:var(--cyan);
+    box-shadow:0 0 6px 2px var(--cyan);
+    opacity:.7;
+    animation: rise linear infinite;
+    z-index:1;
+    pointer-events:none;
+  }
+  @keyframes rise{
+    0%{ transform:translateY(0) translateX(0); opacity:0; }
+    10%{ opacity:.8; }
+    90%{ opacity:.4; }
+    100%{ transform:translateY(-100vh) translateX(20px); opacity:0; }
+  }
+
+  header{
+    position:relative; z-index:2;
+    display:flex; justify-content:space-between; align-items:center;
+    padding: 30px 6vw;
+    font-family:'Cormorant Garamond', serif;
+    font-size:14px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--ink-dim);
+  }
+  header .mark{
+    font-family:'Cinzel', serif;
+    font-weight:600;
+    color:var(--parchment);
+    letter-spacing:.1em;
+  }
+  header .mark span{ color:var(--cyan); }
+
+  main{
+    position:relative; z-index:2;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    padding: 20px 6vw 80px;
+  }
+
+  .eyebrow{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:600;
+    font-size:15px;
+    letter-spacing:.3em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin-bottom:18px;
+  }
+
+  h1{
+    font-family:'Cinzel Decorative', 'Cinzel', serif;
+    font-weight:700;
+    font-size:clamp(2rem, 6vw, 4.2rem);
+    line-height:1.1;
+    background:linear-gradient(180deg, var(--parchment) 0%, var(--cyan) 120%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    text-shadow: 0 0 40px rgba(111,227,255,.25);
+    max-width:18ch;
+  }
+
+  p.lede{
+    margin-top:20px;
+    max-width:52ch;
+    font-style:italic;
+    font-size:clamp(1.05rem, 1.7vw, 1.25rem);
+    color:var(--ink-dim);
+    line-height:1.7;
+  }
+
+  /* the tower — signature element */
+  .tower-wrap{
+    margin-top:44px;
+    position:relative;
+    height:280px;
+    display:flex;
+    align-items:flex-end;
+  }
+  .tower-wrap svg{ overflow:visible; }
+  .window{
+    animation: flicker 5s ease-in-out infinite;
+  }
+  .window.lit{ animation-name: flicker-lit; }
+  @keyframes flicker{
+    0%,100%{ opacity:.12; }
+    50%{ opacity:.22; }
+  }
+  @keyframes flicker-lit{
+    0%,100%{ opacity:.85; }
+    50%{ opacity:1; }
+  }
+
+  .progress-caption{
+    margin-top:22px;
+    font-family:'Cinzel', serif;
+    font-size:13px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--ink-dim);
+  }
+  .progress-caption .n{ color:var(--cyan); font-weight:600; }
+
+  form{
+    margin-top:52px;
+    display:flex;
+    gap:10px;
+    width:min(440px, 88vw);
+  }
+  form input[type="email"]{
+    flex:1;
+    background:rgba(27,35,80,.5);
+    border:1px solid var(--stone-line);
+    border-radius:2px;
+    padding:13px 16px;
+    color:var(--parchment);
+    font-family:'EB Garamond', serif;
+    font-size:15px;
+    outline:none;
+    transition:border-color .2s ease, box-shadow .2s ease;
+  }
+  form input[type="email"]::placeholder{ color:var(--ink-dim); }
+  form input[type="email"]:focus{
+    border-color:var(--cyan);
+    box-shadow:0 0 0 1px var(--cyan-dim);
+  }
+  form input[type="email"]:focus-visible{ outline:2px solid var(--cyan); outline-offset:2px; }
+  form button{
+    background:transparent;
+    color:var(--gold);
+    border:1px solid var(--gold);
+    border-radius:2px;
+    padding:13px 22px;
+    font-family:'Cinzel', serif;
+    font-weight:600;
+    font-size:13px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    cursor:pointer;
+    transition:background .2s ease, color .2s ease;
+    white-space:nowrap;
+  }
+  form button:hover{ background:var(--gold); color:#161033; }
+  form button:focus-visible{ outline:2px solid var(--cyan); outline-offset:2px; }
+
+  .note{
+    margin-top:14px;
+    font-family:'Cormorant Garamond', serif;
+    font-size:14px;
+    color:var(--ink-dim);
+    min-height:16px;
+    font-style:italic;
+  }
+  .note.ok{ color:var(--cyan); }
+
+  .seal{
+    position:relative; z-index:2;
+    margin: 60px auto 40px;
+    font-family:'Cormorant Garamond', serif;
+    font-size:13px;
+    letter-spacing:.08em;
+    color:var(--ink-dim);
+    text-align:center;
+    border-top:1px solid var(--stone-line);
+    padding-top:22px;
+    width:min(520px, 86vw);
+  }
+  .seal .status{ color:var(--gold); font-weight:600; }
+
+  @media (max-width: 640px){
+    form{ flex-direction:column; }
+    .tower-wrap{ height:220px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:.001ms !important; animation-iteration-count:1 !important; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="stars" id="stars"></div>
+
+  <header>
+    <div class="mark">Blue Tower <span>Chronicle</span></div>
+    <div>Chapter 0 — Unwritten</div>
+  </header>
+
+  <main>
+    <div class="eyebrow">The Chronicle Continues</div>
+    <h1>The tower still<br>climbs toward the sky.</h1>
+    <p class="lede">
+      Every floor is being carved, every rune set in place. Blue Tower Chronicle is still being forged —
+      sign the chronicle below and you'll be among the first summoned when the gates open.
+    </p>
+
+    <div class="tower-wrap">
+      <svg width="180" height="280" viewBox="0 0 180 280" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="stoneGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#232C5C"/>
+            <stop offset="100%" stop-color="#151A3D"/>
+          </linearGradient>
+          <filter id="glow" x="-100%" y="-100%" width="300%" height="300%">
+            <feGaussianBlur stdDeviation="3" result="blur"/>
+            <feMerge>
+              <feMergeNode in="blur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
+
+        <!-- spire -->
+        <polygon points="90,0 105,34 75,34" fill="url(#stoneGrad)" stroke="#3A4680" stroke-width="1"/>
+        <circle cx="90" cy="8" r="4" fill="#6FE3FF" filter="url(#glow)" class="window lit"/>
+
+        <!-- tower body: 8 floors -->
+        <rect x="55" y="34" width="70" height="246" fill="url(#stoneGrad)" stroke="#3A4680" stroke-width="1.5"/>
+
+        <!-- floor divider lines -->
+        <g stroke="#2C3568" stroke-width="1">
+          <line x1="55" y1="65" x2="125" y2="65"/>
+          <line x1="55" y1="96" x2="125" y2="96"/>
+          <line x1="55" y1="127" x2="125" y2="127"/>
+          <line x1="55" y1="158" x2="125" y2="158"/>
+          <line x1="55" y1="189" x2="125" y2="189"/>
+          <line x1="55" y1="220" x2="125" y2="220"/>
+          <line x1="55" y1="251" x2="125" y2="251"/>
+        </g>
+
+        <!-- windows, two per floor; top floors lit = progress -->
+        <!-- floor 1 (top) lit -->
+        <rect class="window lit" x="66" y="44" width="10" height="14" rx="5" fill="#6FE3FF" filter="url(#glow)"/>
+        <rect class="window lit" x="104" y="44" width="10" height="14" rx="5" fill="#6FE3FF" filter="url(#glow)"/>
+        <!-- floor 2 lit -->
+        <rect class="window lit" x="66" y="75" width="10" height="14" rx="5" fill="#6FE3FF" filter="url(#glow)"/>
+        <rect class="window lit" x="104" y="75" width="10" height="14" rx="5" fill="#6FE3FF" filter="url(#glow)"/>
+        <!-- floor 3 lit -->
+        <rect class="window lit" x="66" y="106" width="10" height="14" rx="5" fill="#E8C169" filter="url(#glow)"/>
+        <rect class="window lit" x="104" y="106" width="10" height="14" rx="5" fill="#6FE3FF" filter="url(#glow)"/>
+        <!-- floor 4 lit -->
+        <rect class="window lit" x="66" y="137" width="10" height="14" rx="5" fill="#6FE3FF" filter="url(#glow)"/>
+        <rect class="window" x="104" y="137" width="10" height="14" rx="5" fill="#6FE3FF"/>
+        <!-- floor 5 dim -->
+        <rect class="window" x="66" y="168" width="10" height="14" rx="5" fill="#6FE3FF"/>
+        <rect class="window" x="104" y="168" width="10" height="14" rx="5" fill="#6FE3FF"/>
+        <!-- floor 6 dim -->
+        <rect class="window" x="66" y="199" width="10" height="14" rx="5" fill="#6FE3FF"/>
+        <rect class="window" x="104" y="199" width="10" height="14" rx="5" fill="#6FE3FF"/>
+        <!-- floor 7 dim -->
+        <rect class="window" x="66" y="230" width="10" height="14" rx="5" fill="#6FE3FF"/>
+        <rect class="window" x="104" y="230" width="10" height="14" rx="5" fill="#6FE3FF"/>
+        <!-- ground door -->
+        <rect x="80" y="255" width="20" height="25" rx="3" fill="#0E1330" stroke="#3A4680" stroke-width="1"/>
+
+        <!-- base -->
+        <rect x="45" y="278" width="90" height="6" fill="#151A3D"/>
+      </svg>
+    </div>
+
+    <div class="progress-caption">Floors raised: <span class="n">4</span> of <span class="n">7</span></div>
+
+    <form id="notifyForm">
+      <input type="email" id="emailInput" placeholder="your.name@realm.com" required aria-label="Email address">
+      <button type="submit">Sign the Chronicle</button>
+    </form>
+    <div class="note" id="formNote"></div>
+  </main>
+
+  <div class="seal">
+    Blue Tower Chronicle — <span class="status">In Development</span> — Gates remain sealed until construction ends.
+  </div>
+
+  <script>
+    // scatter stars
+    const starsEl = document.getElementById('stars');
+    const starCount = window.innerWidth < 640 ? 50 : 100;
+    for(let i=0;i<starCount;i++){
+      const s = document.createElement('div');
+      s.className = 'star';
+      s.style.left = Math.random()*100 + 'vw';
+      s.style.top = Math.random()*100 + 'vh';
+      s.style.animationDelay = (Math.random()*4) + 's';
+      s.style.width = s.style.height = (Math.random()*1.5+1) + 'px';
+      starsEl.appendChild(s);
+    }
+
+    // rising embers
+    const emberCount = window.innerWidth < 640 ? 8 : 16;
+    for(let i=0;i<emberCount;i++){
+      const e = document.createElement('div');
+      e.className = 'ember';
+      e.style.left = Math.random()*100 + 'vw';
+      e.style.animationDuration = (8 + Math.random()*8) + 's';
+      e.style.animationDelay = (Math.random()*10) + 's';
+      document.body.appendChild(e);
+    }
+
+    const form = document.getElementById('notifyForm');
+    const note = document.getElementById('formNote');
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      const email = document.getElementById('emailInput').value.trim();
+      if(email){
+        note.textContent = 'Your name has been sealed in the chronicle. We will summon you when the gates open.';
+        note.classList.add('ok');
+        form.reset();
+      }
+    });
+  </script>
+</body>
+</html>
