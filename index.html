@@ -1,368 +1,951 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+<link rel="icon" type="image/png" href="favicon/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="favicon/favicon.svg" />
+<link rel="shortcut icon" href="favicon/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png" />
+<link rel="manifest" href="favicon/site.webmanifest" />
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Blue Tower Chronicle — The Tower is Still Being Forged</title>
+<title>Blue Tower Chronicle</title>
+<meta name="description" content="The Tower wakes, and something answers. Blue Tower Chronicle — a roguelike deckbuilder where the same card, played three times, becomes something else.">
+
+<!-- NOTE: social + storefront links below are placeholders (#). Replace with your real
+     itch.io / TikTok / YouTube / X URLs before publishing. -->
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cinzel+Decorative:wght@700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Cormorant+Garamond:wght@500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif+JP:wght@500;700&family=Inter:wght@400;500;600&family=Noto+Sans+JP:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
 <style>
   :root{
-    --night: #080B1E;
-    --night-2: #0E1436;
-    --stone: #1B2350;
-    --stone-line: #2C3568;
-    --cyan: #6FE3FF;
-    --cyan-dim: #2E6E82;
-    --gold: #E8C169;
-    --parchment: #EDE6D6;
-    --ink-dim: #9BA3D0;
+    --void:       #0a0b12;
+    --void-soft:  #12141f;
+    --panel:      #171a26;
+    --bone:       #e9e4d6;
+    --bone-dim:   #a6a1a3;
+    --gold:       #c9a24b;
+    --gold-dim:   #8a734a;
+    --teal:       #4fd1c5;
+    --crimson:    #b34a4a;
+    --line:       rgba(233,228,214,0.10);
+
+    --display: 'Cormorant Garamond', 'Noto Serif JP', serif;
+    --body: 'Inter', 'Noto Sans JP', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
   }
-  *{box-sizing:border-box; margin:0; padding:0;}
-  html,body{height:100%;}
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; }
+  }
+
   body{
-    background:
-      radial-gradient(ellipse at 50% 20%, #171E4A 0%, transparent 55%),
-      linear-gradient(180deg, var(--night) 0%, #050714 100%);
-    color:var(--parchment);
-    font-family:'EB Garamond', serif;
-    min-height:100vh;
+    margin:0;
+    background:var(--void);
+    color:var(--bone);
+    font-family:var(--body);
+    line-height:1.6;
     overflow-x:hidden;
-    position:relative;
   }
 
-  /* starfield */
-  .stars{ position:fixed; inset:0; z-index:0; pointer-events:none; }
-  .star{
-    position:absolute;
-    width:2px; height:2px;
-    background:var(--parchment);
-    border-radius:50%;
-    opacity:.5;
-    animation: twinkle 4s ease-in-out infinite;
-  }
-  @keyframes twinkle{
-    0%,100%{ opacity:.15; }
-    50%{ opacity:.9; }
-  }
+  a{ color:inherit; }
+  ::selection{ background:var(--gold); color:var(--void); }
 
-  /* embers */
-  .ember{
-    position:fixed;
-    bottom:-10px;
-    width:3px; height:3px;
-    border-radius:50%;
-    background:var(--cyan);
-    box-shadow:0 0 6px 2px var(--cyan);
-    opacity:.7;
-    animation: rise linear infinite;
-    z-index:1;
-    pointer-events:none;
-  }
-  @keyframes rise{
-    0%{ transform:translateY(0) translateX(0); opacity:0; }
-    10%{ opacity:.8; }
-    90%{ opacity:.4; }
-    100%{ transform:translateY(-100vh) translateX(20px); opacity:0; }
-  }
-
-  header{
-    position:relative; z-index:2;
-    display:flex; justify-content:space-between; align-items:center;
-    padding: 30px 6vw;
-    font-family:'Cormorant Garamond', serif;
-    font-size:14px;
-    letter-spacing:.14em;
-    text-transform:uppercase;
-    color:var(--ink-dim);
-  }
-  header .mark{
-    font-family:'Cinzel', serif;
-    font-weight:600;
-    color:var(--parchment);
-    letter-spacing:.1em;
-  }
-  header .mark span{ color:var(--cyan); }
-
-  main{
-    position:relative; z-index:2;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    text-align:center;
-    padding: 20px 6vw 80px;
+  :focus-visible{
+    outline:2px solid var(--teal);
+    outline-offset:3px;
   }
 
   .eyebrow{
-    font-family:'Cormorant Garamond', serif;
-    font-weight:600;
-    font-size:15px;
-    letter-spacing:.3em;
+    font-family:var(--mono);
+    font-size:0.72rem;
+    letter-spacing:0.28em;
     text-transform:uppercase;
     color:var(--gold);
-    margin-bottom:18px;
-  }
-
-  h1{
-    font-family:'Cinzel Decorative', 'Cinzel', serif;
-    font-weight:700;
-    font-size:clamp(2rem, 6vw, 4.2rem);
-    line-height:1.1;
-    background:linear-gradient(180deg, var(--parchment) 0%, var(--cyan) 120%);
-    -webkit-background-clip:text;
-    background-clip:text;
-    color:transparent;
-    text-shadow: 0 0 40px rgba(111,227,255,.25);
-    max-width:18ch;
-  }
-
-  p.lede{
-    margin-top:20px;
-    max-width:52ch;
-    font-style:italic;
-    font-size:clamp(1.05rem, 1.7vw, 1.25rem);
-    color:var(--ink-dim);
-    line-height:1.7;
-  }
-
-  /* the tower — signature element */
-  .tower-wrap{
-    margin-top:44px;
-    position:relative;
-    height:280px;
     display:flex;
-    align-items:flex-end;
+    align-items:center;
+    gap:0.7em;
   }
-  .tower-wrap svg{ overflow:visible; }
-  .window{
-    animation: flicker 5s ease-in-out infinite;
+  .eyebrow::before{
+    content:"";
+    width:22px; height:1px;
+    background:var(--gold-dim);
+    display:inline-block;
   }
-  .window.lit{ animation-name: flicker-lit; }
-  @keyframes flicker{
-    0%,100%{ opacity:.12; }
-    50%{ opacity:.22; }
+
+  section{
+    position:relative;
+    padding:min(14vw,140px) 6vw;
+    max-width:1180px;
+    margin:0 auto;
   }
-  @keyframes flicker-lit{
-    0%,100%{ opacity:.85; }
+
+  h1,h2,h3{ font-family:var(--display); font-weight:500; margin:0; }
+
+  /* ---------- NAV ---------- */
+  .nav{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:1.4rem 6vw;
+    background:linear-gradient(to bottom, rgba(10,11,18,0.85), transparent);
+    font-family:var(--mono);
+    font-size:0.75rem;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    pointer-events:none;
+  }
+  .nav *{ pointer-events:auto; }
+  .nav-mark{ color:var(--bone); font-family:var(--display); font-size:1.05rem; letter-spacing:0.05em; font-style:italic; }
+  .nav-links{ display:flex; gap:2rem; }
+  .nav-links a{ text-decoration:none; color:var(--bone-dim); transition:color .25s; }
+  .nav-links a:hover{ color:var(--gold); }
+  @media (max-width:720px){ .nav-links{ display:none; } }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    min-height:100svh;
+    max-width:none;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center;
+    padding:0 6vw;
+    position:relative;
+    isolation:isolate;
+  }
+
+  .hero-bg{
+    position:absolute; inset:0; z-index:-2;
+    background:
+      radial-gradient(60% 45% at 50% 78%, rgba(201,162,75,0.16), transparent 70%),
+      radial-gradient(80% 60% at 50% 110%, rgba(79,209,197,0.08), transparent 70%),
+      linear-gradient(to bottom, #0a0b12 0%, #0d0f18 55%, #0a0b12 100%);
+  }
+  .hero-tower{
+    position:absolute; z-index:-1; bottom:0; left:50%; transform:translateX(-50%);
+    width:min(90vw, 620px);
+    opacity:0.9;
+  }
+  .hero-tower .glow{ animation:pulse 6s ease-in-out infinite; transform-origin:center; }
+  @keyframes pulse{
+    0%,100%{ opacity:0.55; }
     50%{ opacity:1; }
   }
 
-  .progress-caption{
-    margin-top:22px;
-    font-family:'Cinzel', serif;
-    font-size:13px;
-    letter-spacing:.18em;
-    text-transform:uppercase;
-    color:var(--ink-dim);
+  .hero-eyebrow{ margin-bottom:1.6rem; }
+  .hero h1{
+    font-size:clamp(2.6rem, 8vw, 5.4rem);
+    letter-spacing:0.02em;
+    background:linear-gradient(180deg, var(--bone) 0%, var(--gold) 120%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    line-height:1.05;
   }
-  .progress-caption .n{ color:var(--cyan); font-weight:600; }
-
-  form{
-    margin-top:52px;
-    display:flex;
-    gap:10px;
-    width:min(440px, 88vw);
+  .hero-tagline{
+    font-family:var(--display); font-style:italic; font-weight:400;
+    font-size:clamp(1.05rem,2.4vw,1.5rem);
+    color:var(--bone-dim);
+    margin-top:1.4rem;
+    max-width:36ch;
   }
-  form input[type="email"]{
-    flex:1;
-    background:rgba(27,35,80,.5);
-    border:1px solid var(--stone-line);
-    border-radius:2px;
-    padding:13px 16px;
-    color:var(--parchment);
-    font-family:'EB Garamond', serif;
-    font-size:15px;
-    outline:none;
-    transition:border-color .2s ease, box-shadow .2s ease;
+  .hero-sub{
+    margin-top:1.9rem;
+    font-size:0.98rem;
+    color:var(--bone-dim);
+    max-width:46ch;
   }
-  form input[type="email"]::placeholder{ color:var(--ink-dim); }
-  form input[type="email"]:focus{
-    border-color:var(--cyan);
-    box-shadow:0 0 0 1px var(--cyan-dim);
-  }
-  form input[type="email"]:focus-visible{ outline:2px solid var(--cyan); outline-offset:2px; }
-  form button{
-    background:transparent;
-    color:var(--gold);
-    border:1px solid var(--gold);
-    border-radius:2px;
-    padding:13px 22px;
-    font-family:'Cinzel', serif;
-    font-weight:600;
-    font-size:13px;
-    letter-spacing:.1em;
-    text-transform:uppercase;
+  .lang-toggle{
+    margin-top:0.6rem;
+    font-family:var(--mono);
+    font-size:0.7rem;
+    letter-spacing:0.15em;
+    background:none;
+    border:1px solid var(--line);
+    color:var(--bone-dim);
+    padding:0.35rem 0.9rem;
+    border-radius:999px;
     cursor:pointer;
-    transition:background .2s ease, color .2s ease;
-    white-space:nowrap;
+    transition:border-color .2s, color .2s;
   }
-  form button:hover{ background:var(--gold); color:#161033; }
-  form button:focus-visible{ outline:2px solid var(--cyan); outline-offset:2px; }
+  .lang-toggle:hover{ border-color:var(--gold-dim); color:var(--gold); }
 
-  .note{
-    margin-top:14px;
-    font-family:'Cormorant Garamond', serif;
-    font-size:14px;
-    color:var(--ink-dim);
-    min-height:16px;
+  .hero-ctas{
+    margin-top:2.6rem;
+    display:flex; gap:1rem; flex-wrap:wrap; justify-content:center;
+  }
+  .btn{
+    font-family:var(--mono);
+    font-size:0.78rem;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    text-decoration:none;
+    padding:0.9rem 1.7rem;
+    border-radius:2px;
+    transition:transform .25s, background .25s, border-color .25s, color .25s;
+    display:inline-block;
+  }
+  .btn-gold{
+    background:var(--gold); color:var(--void);
+    border:1px solid var(--gold);
+  }
+  .btn-gold:hover{ transform:translateY(-2px); background:#dab668; }
+  .btn-ghost{
+    background:transparent; color:var(--bone);
+    border:1px solid var(--line);
+  }
+  .btn-ghost:hover{ border-color:var(--teal); color:var(--teal); transform:translateY(-2px); }
+
+  .scroll-cue{
+    position:absolute; bottom:2.4rem; left:50%; transform:translateX(-50%);
+    font-family:var(--mono); font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase;
+    color:var(--bone-dim); opacity:0.7;
+    display:flex; flex-direction:column; align-items:center; gap:0.5rem;
+  }
+  .scroll-cue .stem{ width:1px; height:34px; background:linear-gradient(var(--gold-dim), transparent); animation:drop 2.2s ease-in-out infinite; }
+  @keyframes drop{ 0%{ transform:scaleY(0); transform-origin:top;} 50%{ transform:scaleY(1); transform-origin:top;} 51%{transform-origin:bottom;} 100%{ transform:scaleY(0); transform-origin:bottom; } }
+
+  /* ---------- PREMISE ---------- */
+  .premise{
+    display:grid; grid-template-columns:1.1fr 0.9fr; gap:4rem; align-items:center;
+  }
+  @media (max-width:860px){ .premise{ grid-template-columns:1fr; } }
+  .premise h2{ font-size:clamp(1.8rem,3.6vw,2.6rem); margin-bottom:1.4rem; }
+  .premise p{ color:var(--bone-dim); font-size:1.02rem; max-width:52ch; }
+  .premise p + p{ margin-top:1rem; }
+  .premise-mark{ color:var(--bone); font-style:italic; font-family:var(--display); }
+
+  .sigil{
+    width:100%; max-width:320px; margin:0 auto; opacity:0.9;
+  }
+
+  /* ---------- CHARACTERS (full-bleed diagonal showcase) ---------- */
+  section.char-showcase{
+    max-width:none;
+    padding:0;
+    margin:0;
+    position:relative;
+    height:min(94vh, 780px);
+    min-height:560px;
+    overflow:hidden;
+    background:var(--void);
+  }
+
+  .showcase-portrait-pane{
+    position:absolute; inset:0;
+    background:
+      radial-gradient(38% 55% at 18% 30%, rgba(255,255,255,0.05), transparent 60%),
+      linear-gradient(160deg, #05060a 0%, #0a0b12 55%, #0d0f18 100%);
+    overflow:hidden;
+  }
+  .showcase-portrait-pane .spark{
+    position:absolute;
+    width:3px; height:3px;
+    background:var(--bone);
+    border-radius:50%;
+    opacity:0.5;
+    animation:twinkle 3.6s ease-in-out infinite;
+  }
+  @keyframes twinkle{ 0%,100%{ opacity:0.15; } 50%{ opacity:0.85; } }
+
+  .showcase-emblem-bg{
+    position:absolute; left:-8%; top:50%; transform:translateY(-50%);
+    width:70%; max-width:640px;
+    opacity:0.16;
+    transition:opacity .5s ease;
+  }
+
+  .showcase-portrait{
+    position:absolute; left:2%; bottom:0;
+    width:min(52%, 480px);
+    display:flex; align-items:flex-end; justify-content:center;
+    opacity:1; transform:translateY(0) scale(1);
+    transition:opacity .35s ease, transform .35s ease;
+    filter:drop-shadow(0 30px 60px rgba(0,0,0,0.6));
+  }
+  .showcase-portrait.swap{ opacity:0; transform:translateY(18px) scale(0.97); }
+  .showcase-portrait svg, .showcase-portrait img{ width:100%; height:auto; display:block; }
+
+  .showcase-text-pane{
+    position:absolute; inset:0;
+    background:linear-gradient(155deg, #efe9da 0%, var(--bone) 60%);
+    clip-path:polygon(52% 0, 100% 0, 100% 100%, 36% 100%);
+    display:flex; align-items:center;
+    color:#1c1a15;
+  }
+  .showcase-floor-label{
+    position:absolute;
+    font-family:var(--mono); font-size:0.7rem; letter-spacing:0.1em;
+    color:#1c1a15; opacity:0.08;
+  }
+
+  .showcase-text-inner{
+    padding-left:58%;
+    padding-right:6vw;
+  }
+  .showcase-eyebrow{
+    font-family:var(--mono); font-size:0.72rem; letter-spacing:0.22em; text-transform:uppercase;
+    color:var(--gold-dim);
+    display:flex; align-items:center; gap:0.6em;
+  }
+  .showcase-name{
+    font-family:var(--display); font-weight:600; font-style:normal;
+    font-size:clamp(2rem, 3.6vw, 3.2rem);
+    color:#141216;
+    margin-top:0.6rem;
+    transition:opacity .3s ease, transform .3s ease;
+  }
+  .showcase-quote{
+    font-family:var(--display); font-style:italic; font-size:1.15rem;
+    color:#3a352c;
+    margin-top:1.1rem;
+    max-width:36ch;
+    transition:opacity .3s ease, transform .3s ease;
+  }
+  .showcase-lore{
+    font-size:0.92rem; color:#55503f;
+    margin-top:1.1rem;
+    max-width:42ch;
+    transition:opacity .3s ease, transform .3s ease;
+  }
+  .showcase-text-inner.swap .showcase-name,
+  .showcase-text-inner.swap .showcase-quote,
+  .showcase-text-inner.swap .showcase-lore{ opacity:0; transform:translateY(6px); }
+
+  .showcase-share{
+    margin-top:1.6rem;
+    display:inline-flex; align-items:center; gap:0.6em;
+    font-family:var(--mono); font-size:0.72rem; letter-spacing:0.06em; text-transform:uppercase;
+    background:#1c1a15; color:var(--bone);
+    border:none; padding:0.8rem 1.4rem; border-radius:3px; cursor:pointer;
+    transition:background .2s, transform .2s;
+  }
+  .showcase-share:hover{ background:#000; transform:translateY(-1px); }
+
+  .showcase-thumbs{
+    position:absolute; right:5vw; bottom:2.2rem;
+    display:flex; align-items:center; gap:0.7rem;
+    z-index:2;
+  }
+  .thumb-arrow{
+    width:30px; height:30px; border-radius:50%;
+    border:1px solid rgba(28,26,21,0.25);
+    background:transparent; color:#1c1a15;
+    cursor:pointer; font-size:1rem; line-height:1;
+    display:flex; align-items:center; justify-content:center;
+    transition:background .2s, color .2s;
+    flex-shrink:0;
+  }
+  .thumb-arrow:hover{ background:#1c1a15; color:var(--bone); }
+
+  .thumb{
+    /*
+    width:52px; height:52px; border-radius:10px;
+    */
+    width:100px; height:100px; border-radius:10px;
+    border:2px solid transparent;
+    background:var(--void-soft);
+    padding:6px;
+    cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    transition:border-color .25s, transform .2s;
+    flex-shrink:0;
+  }
+  .thumb svg, .thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .thumb:hover{ transform:translateY(-2px); }
+  .thumb.active{ border-color:var(--thumb-accent, var(--gold)); }
+
+  @media (max-width:760px){
+    section.char-showcase{
+      height:auto; min-height:0;
+      display:flex; flex-direction:column;
+    }
+    .showcase-portrait-pane{ position:relative; height:52vh; min-height:320px; }
+    .showcase-text-pane{
+      position:relative; clip-path:none; height:auto;
+      padding:2.4rem 6vw 6.5rem;
+    }
+    .showcase-text-inner{ padding-left:0; padding-right:0; max-width:none; }
+    .showcase-thumbs{ position:relative; right:auto; bottom:auto; margin-top:1.8rem; justify-content:center; }
+  }
+
+  /* ---------- COMBINITE ---------- */
+  .combinite{
+    text-align:center;
+  }
+  .combinite h2{
+    font-size:clamp(2.2rem,5vw,3.4rem);
+    letter-spacing:0.03em;
+  }
+  .combinite .lede{
+    color:var(--bone-dim); max-width:52ch; margin:1.2rem auto 0;
+  }
+
+  .combo-stage{
+    margin:3.5rem auto 0;
+    display:flex; flex-direction:column; align-items:center; gap:2.2rem;
+  }
+  .combo-slots{
+    display:flex; gap:1.1rem;
+  }
+  .slot{
+    width:78px; height:104px;
+    border:1px solid var(--line);
+    border-radius:4px;
+    background:var(--panel);
+    display:flex; align-items:center; justify-content:center;
+    position:relative;
+    transition:border-color .3s, box-shadow .3s, background .3s;
+  }
+  .slot .mark{
+    font-family:var(--display); font-style:italic; color:var(--bone-dim); font-size:1.6rem;
+    transition:color .3s;
+  }
+  .slot.filled{
+    border-color:var(--gold);
+    box-shadow:0 0 22px rgba(201,162,75,0.25);
+    background:linear-gradient(160deg, rgba(201,162,75,0.14), var(--panel));
+  }
+  .slot.filled .mark{ color:var(--gold); }
+  .slot-index{
+    position:absolute; top:6px; left:8px;
+    font-family:var(--mono); font-size:0.6rem; color:var(--bone-dim); opacity:0.6;
+  }
+
+  .combo-btn{
+    font-family:var(--mono); font-size:0.8rem; letter-spacing:0.08em; text-transform:uppercase;
+    background:transparent; color:var(--bone);
+    border:1px solid var(--gold-dim);
+    padding:0.85rem 2rem; border-radius:2px; cursor:pointer;
+    transition:border-color .2s, color .2s, transform .2s;
+  }
+  .combo-btn:hover{ border-color:var(--gold); color:var(--gold); transform:translateY(-2px); }
+  .combo-btn:disabled{ opacity:0.4; cursor:default; transform:none; }
+
+  .combo-result{
+    min-height:64px;
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--display); font-style:italic;
+    font-size:1.6rem; letter-spacing:0.04em;
+    color:var(--teal);
+    opacity:0; transform:translateY(6px) scale(0.96);
+    transition:opacity .45s ease, transform .45s ease;
+  }
+  .combo-result.show{ opacity:1; transform:translateY(0) scale(1); }
+  .combo-footnote{
+    font-family:var(--mono); font-size:0.7rem; color:var(--bone-dim); opacity:0.75; max-width:38ch;
+  }
+
+  /* ---------- BESTIARY ---------- */
+  .bestiary h2{ font-size:clamp(1.8rem,3.6vw,2.6rem); }
+  .bestiary .lede{ color:var(--bone-dim); max-width:56ch; margin-top:1rem; }
+
+  .grid{
+    margin-top:3rem;
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(150px,1fr));
+    gap:1rem;
+  }
+  .card{
+    position:relative;
+    aspect-ratio:3/4.1;
+    border:1px solid var(--line);
+    border-radius:6px;
+    background:linear-gradient(165deg, var(--panel), var(--void-soft));
+    overflow:hidden;
+    padding:1rem;
+    display:flex; flex-direction:column; justify-content:flex-end;
+    cursor:default;
+  }
+  .card::before{
+    content:"";
+    position:absolute; inset:0;
+    background:radial-gradient(120px 120px at 50% 30%, var(--card-glow, rgba(79,209,197,0.16)), transparent 70%);
+    opacity:0.7;
+    transition:opacity .4s;
+  }
+  .card:hover::before{ opacity:1; }
+  .card .glyph{
+    position:absolute; top:14px; right:14px;
+    width:34px; height:34px;
+    opacity:0.5;
+  }
+  .card .name{
+    font-family:var(--display); font-style:italic; font-size:1.15rem; color:var(--bone);
+    position:relative; z-index:1;
+  }
+  .card .hint{
+    font-size:0.78rem; color:var(--bone-dim);
+    margin-top:0.5rem;
+    opacity:0; max-height:0; overflow:hidden;
+    transition:opacity .35s, max-height .35s, margin .35s;
+    position:relative; z-index:1;
+  }
+  .card:hover .hint, .card:focus-within .hint{
+    opacity:1; max-height:80px; margin-top:0.6rem;
+  }
+  .card.locked{
+    display:flex; align-items:center; justify-content:center; text-align:center;
+  }
+  .card.locked .name{ font-size:1rem; color:var(--bone-dim); }
+
+  /* ---------- ROADMAP ---------- */
+  .roadmap h2{ font-size:clamp(1.8rem,3.6vw,2.6rem); }
+  .timeline{
+    margin-top:3.4rem;
+    display:flex; flex-direction:column;
+  }
+  .stop{
+    display:grid; grid-template-columns:120px 24px 1fr;
+    column-gap:1.6rem;
+    position:relative;
+    padding-bottom:3.2rem;
+  }
+  .stop:last-child{ padding-bottom:0; }
+  .stop .when{
+    font-family:var(--mono); font-size:0.75rem; color:var(--gold); letter-spacing:0.05em;
+    padding-top:0.15rem; text-align:right;
+  }
+  .stop .rail{ display:flex; flex-direction:column; align-items:center; }
+  .stop .dot{
+    width:10px; height:10px; border-radius:50%;
+    background:var(--void); border:2px solid var(--gold-dim);
+    margin-top:4px;
+  }
+  .stop.active .dot{ background:var(--gold); border-color:var(--gold); box-shadow:0 0 14px rgba(201,162,75,0.5); }
+  .stop .stem{ flex:1; width:1px; background:var(--line); margin-top:4px; }
+  .stop:last-child .stem{ display:none; }
+  .stop h3{ font-size:1.25rem; margin-bottom:0.4rem; }
+  .stop p{ color:var(--bone-dim); font-size:0.92rem; max-width:44ch; margin:0; }
+  @media (max-width:600px){
+    .stop{ grid-template-columns:70px 20px 1fr; }
+    .stop .when{ font-size:0.65rem; }
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    text-align:center;
+    padding:min(12vw,110px) 6vw 4rem;
+    border-top:1px solid var(--line);
+    margin-top:4rem;
+  }
+  footer h2{
+    font-size:clamp(1.8rem,4.4vw,2.8rem);
     font-style:italic;
   }
-  .note.ok{ color:var(--cyan); }
-
-  .seal{
-    position:relative; z-index:2;
-    margin: 60px auto 40px;
-    font-family:'Cormorant Garamond', serif;
-    font-size:13px;
-    letter-spacing:.08em;
-    color:var(--ink-dim);
-    text-align:center;
-    border-top:1px solid var(--stone-line);
-    padding-top:22px;
-    width:min(520px, 86vw);
+  footer .lede{ color:var(--bone-dim); margin-top:1rem; max-width:44ch; margin-inline:auto; }
+  .foot-ctas{ margin-top:2.2rem; display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; }
+  .socials{
+    margin-top:3rem; display:flex; gap:1.6rem; justify-content:center;
+    font-family:var(--mono); font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase;
   }
-  .seal .status{ color:var(--gold); font-weight:600; }
-
-  @media (max-width: 640px){
-    form{ flex-direction:column; }
-    .tower-wrap{ height:220px; }
-  }
-
-  @media (prefers-reduced-motion: reduce){
-    *{ animation-duration:.001ms !important; animation-iteration-count:1 !important; }
-  }
+  .socials a{ color:var(--bone-dim); text-decoration:none; border-bottom:1px solid transparent; transition:color .2s, border-color .2s; }
+  .socials a:hover{ color:var(--teal); border-color:var(--teal); }
+  .fine{ margin-top:3rem; font-family:var(--mono); font-size:0.68rem; color:var(--bone-dim); opacity:0.55; }
 </style>
 </head>
 <body>
 
-  <div class="stars" id="stars"></div>
+<nav class="nav">
+  <span class="nav-mark">Blue Tower Chronicle</span>
+  <div class="nav-links">
+    <a href="#premise">The Tower</a>
+    <a href="#characters">Who's Inside</a>
+    <a href="#combinite">Combinite</a>
+    <a href="#bestiary">Bestiary</a>
+    <a href="#roadmap">Roadmap</a>
+  </div>
+</nav>
 
-  <header>
-    <div class="mark">Blue Tower <span>Chronicle</span></div>
-    <div>Chapter 0 — Unwritten</div>
-  </header>
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <svg class="hero-tower" viewBox="0 0 400 520" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <g class="glow">
+      <ellipse cx="200" cy="470" rx="150" ry="26" fill="#c9a24b" opacity="0.10"/>
+    </g>
+    <path d="M170 520 L170 300 L150 260 L150 180 L165 150 L165 90 L200 40 L235 90 L235 150 L250 180 L250 260 L230 300 L230 520 Z"
+          stroke="#8a734a" stroke-width="1" fill="#12141f" fill-opacity="0.6"/>
+    <line x1="150" y1="300" x2="250" y2="300" stroke="#8a734a" stroke-width="0.6" opacity="0.6"/>
+    <line x1="155" y1="230" x2="245" y2="230" stroke="#8a734a" stroke-width="0.6" opacity="0.4"/>
+    <line x1="165" y1="150" x2="235" y2="150" stroke="#8a734a" stroke-width="0.6" opacity="0.4"/>
+    <circle class="glow" cx="200" cy="120" r="5" fill="#c9a24b"/>
+    <circle class="glow" cx="200" cy="200" r="3" fill="#4fd1c5" opacity="0.8"/>
+    <circle class="glow" cx="200" cy="280" r="3" fill="#c9a24b" opacity="0.7"/>
+  </svg>
 
-  <main>
-    <div class="eyebrow">The Chronicle Continues</div>
-    <h1>The tower still<br>climbs toward the sky.</h1>
-    <p class="lede">
-      Every floor is being carved, every rune set in place. Blue Tower Chronicle is still being forged —
-      sign the chronicle below and you'll be among the first summoned when the gates open.
-    </p>
+  <div class="hero-eyebrow eyebrow">The Tower Stirs</div>
+  <h1>BLUE TOWER<br/>CHRONICLE</h1>
+  <p class="hero-tagline" id="tagline">Every cycle, it wakes. Every cycle, it chooses who answers.</p>
+  <p class="hero-sub">A roguelike deckbuilder where playing the same card three times calls something else into being. Nobody tells you what — you find out.</p>
+  <button style="opacity:0;" class="lang-toggle" id="langToggle" type="button">読む 日本語で</button>
 
-    <div class="tower-wrap">
-      <svg width="180" height="280" viewBox="0 0 180 280" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="stoneGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#232C5C"/>
-            <stop offset="100%" stop-color="#151A3D"/>
-          </linearGradient>
-          <filter id="glow" x="-100%" y="-100%" width="300%" height="300%">
-            <feGaussianBlur stdDeviation="3" result="blur"/>
-            <feMerge>
-              <feMergeNode in="blur"/>
-              <feMergeNode in="SourceGraphic"/>
-            </feMerge>
-          </filter>
-        </defs>
+  <!-- ================= PREMISE ================= 
+  <div class="hero-ctas">
+    <a class="btn btn-gold" href="#roadmap">Follow the Demo</a>
+    <a class="btn btn-ghost" href="#combinite">See Combinite</a>
+  </div>
+  -->
 
-        <!-- spire -->
-        <polygon points="90,0 105,34 75,34" fill="url(#stoneGrad)" stroke="#3A4680" stroke-width="1"/>
-        <circle cx="90" cy="8" r="4" fill="#6FE3FF" filter="url(#glow)" class="window lit"/>
+  <div class="scroll-cue"><span class="stem"></span>SCROLL</div>
+</section>
 
-        <!-- tower body: 8 floors -->
-        <rect x="55" y="34" width="70" height="246" fill="url(#stoneGrad)" stroke="#3A4680" stroke-width="1.5"/>
+<!-- ================= PREMISE ================= -->
+<section class="premise" id="premise">
+  <div>
+    <div class="eyebrow">The Premise</div>
+    <h2 style="margin-top:1rem;">You don't climb the Tower.<br/><span class="premise-mark">You administer it.</span></h2>
+    <p>Once every cycle, the Tower reactivates. Something inside it calls out — and things answer. They call themselves Resonants. Nobody remembers who named them that first.</p>
+    <p>Nine rooms to a floor. Seven fights, one merchant, one door that isn't like the others. What's waiting up there changes depending on how deep you've gone, and how deep is a question the Tower answers differently for everyone.</p>
+    <p>We're not going to explain the rest. Better if you find it.</p>
+  </div>
+  <svg class="sigil" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <circle cx="100" cy="100" r="86" stroke="#8a734a" stroke-width="0.7" opacity="0.5"/>
+    <circle cx="100" cy="100" r="60" stroke="#4fd1c5" stroke-width="0.7" opacity="0.4"/>
+    <path d="M100 20 L112 88 L180 100 L112 112 L100 180 L88 112 L20 100 L88 88 Z" stroke="#c9a24b" stroke-width="0.9" opacity="0.8"/>
+    <circle cx="100" cy="100" r="6" fill="#c9a24b"/>
+  </svg>
+</section>
 
-        <!-- floor divider lines -->
-        <g stroke="#2C3568" stroke-width="1">
-          <line x1="55" y1="65" x2="125" y2="65"/>
-          <line x1="55" y1="96" x2="125" y2="96"/>
-          <line x1="55" y1="127" x2="125" y2="127"/>
-          <line x1="55" y1="158" x2="125" y2="158"/>
-          <line x1="55" y1="189" x2="125" y2="189"/>
-          <line x1="55" y1="220" x2="125" y2="220"/>
-          <line x1="55" y1="251" x2="125" y2="251"/>
-        </g>
-
-        <!-- windows, two per floor; top floors lit = progress -->
-        <!-- floor 1 (top) lit -->
-        <rect class="window lit" x="66" y="44" width="10" height="14" rx="5" fill="#6FE3FF" filter="url(#glow)"/>
-        <rect class="window lit" x="104" y="44" width="10" height="14" rx="5" fill="#6FE3FF" filter="url(#glow)"/>
-        <!-- floor 2 lit -->
-        <rect class="window lit" x="66" y="75" width="10" height="14" rx="5" fill="#6FE3FF" filter="url(#glow)"/>
-        <rect class="window lit" x="104" y="75" width="10" height="14" rx="5" fill="#6FE3FF" filter="url(#glow)"/>
-        <!-- floor 3 lit -->
-        <rect class="window lit" x="66" y="106" width="10" height="14" rx="5" fill="#E8C169" filter="url(#glow)"/>
-        <rect class="window lit" x="104" y="106" width="10" height="14" rx="5" fill="#6FE3FF" filter="url(#glow)"/>
-        <!-- floor 4 lit -->
-        <rect class="window lit" x="66" y="137" width="10" height="14" rx="5" fill="#6FE3FF" filter="url(#glow)"/>
-        <rect class="window" x="104" y="137" width="10" height="14" rx="5" fill="#6FE3FF"/>
-        <!-- floor 5 dim -->
-        <rect class="window" x="66" y="168" width="10" height="14" rx="5" fill="#6FE3FF"/>
-        <rect class="window" x="104" y="168" width="10" height="14" rx="5" fill="#6FE3FF"/>
-        <!-- floor 6 dim -->
-        <rect class="window" x="66" y="199" width="10" height="14" rx="5" fill="#6FE3FF"/>
-        <rect class="window" x="104" y="199" width="10" height="14" rx="5" fill="#6FE3FF"/>
-        <!-- floor 7 dim -->
-        <rect class="window" x="66" y="230" width="10" height="14" rx="5" fill="#6FE3FF"/>
-        <rect class="window" x="104" y="230" width="10" height="14" rx="5" fill="#6FE3FF"/>
-        <!-- ground door -->
-        <rect x="80" y="255" width="20" height="25" rx="3" fill="#0E1330" stroke="#3A4680" stroke-width="1"/>
-
-        <!-- base -->
-        <rect x="45" y="278" width="90" height="6" fill="#151A3D"/>
-      </svg>
-    </div>
-
-    <div class="progress-caption">Floors raised: <span class="n">4</span> of <span class="n">7</span></div>
-
-    <form id="notifyForm">
-      <input type="email" id="emailInput" placeholder="your.name@realm.com" required aria-label="Email address">
-      <button type="submit">Sign the Chronicle</button>
-    </form>
-    <div class="note" id="formNote"></div>
-  </main>
-
-  <div class="seal">
-    Blue Tower Chronicle — <span class="status">In Development</span> — Gates remain sealed until construction ends.
+<!-- ================= CHARACTERS ================= -->
+<section class="char-showcase" id="characters">
+  <div class="showcase-portrait-pane" id="portraitPane">
+    <svg class="showcase-emblem-bg" id="emblemBg" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <circle cx="100" cy="100" r="94" stroke="#e9e4d6" stroke-width="0.6"/>
+      <path d="M100 10 L118 90 L190 100 L118 110 L100 190 L82 110 L10 100 L82 90 Z" stroke="#e9e4d6" stroke-width="0.8"/>
+    </svg>
+    <span class="spark" style="left:12%; top:20%; animation-delay:0s;"></span>
+    <span class="spark" style="left:22%; top:62%; animation-delay:0.6s;"></span>
+    <span class="spark" style="left:33%; top:14%; animation-delay:1.2s;"></span>
+    <span class="spark" style="left:8%; top:76%; animation-delay:1.8s;"></span>
+    <span class="spark" style="left:28%; top:40%; animation-delay:2.4s;"></span>
+    <span class="spark" style="left:40%; top:70%; animation-delay:0.9s;"></span>
+    <div class="showcase-portrait" id="charPortrait"></div>
   </div>
 
-  <script>
-    // scatter stars
-    const starsEl = document.getElementById('stars');
-    const starCount = window.innerWidth < 640 ? 50 : 100;
-    for(let i=0;i<starCount;i++){
-      const s = document.createElement('div');
-      s.className = 'star';
-      s.style.left = Math.random()*100 + 'vw';
-      s.style.top = Math.random()*100 + 'vh';
-      s.style.animationDelay = (Math.random()*4) + 's';
-      s.style.width = s.style.height = (Math.random()*1.5+1) + 'px';
-      starsEl.appendChild(s);
-    }
+  <div class="showcase-text-pane">
+    <span class="showcase-floor-label" style="right:14%; top:12%;">FLOOR VII</span>
+    <span class="showcase-floor-label" style="right:8%; top:70%;">FLOOR III</span>
+    <span class="showcase-floor-label" style="right:26%; top:44%;">ROOT</span>
 
-    // rising embers
-    const emberCount = window.innerWidth < 640 ? 8 : 16;
-    for(let i=0;i<emberCount;i++){
-      const e = document.createElement('div');
-      e.className = 'ember';
-      e.style.left = Math.random()*100 + 'vw';
-      e.style.animationDuration = (8 + Math.random()*8) + 's';
-      e.style.animationDelay = (Math.random()*10) + 's';
-      document.body.appendChild(e);
-    }
+    <div class="showcase-text-inner" id="textPane">
+      <div class="showcase-eyebrow">✦ <span id="charEpithet">The One Still Climbing</span></div>
+      <h2 class="showcase-name" id="charName">The Wanderer</h2>
+      <p class="showcase-quote" id="charQuote">"I don't care what the Tower wants. I'm finding her."</p>
+      <p class="showcase-lore" id="charLore">Pulled through a door that shouldn't have opened, chasing a close friend who went through it first. He's climbing because she's still up there — not for glory, and not for anything the Tower thinks he should want.</p>
+      <button style="opacity:0;" class="showcase-share" id="shareBtn" type="button">◈ Copy link to this character</button>
+    </div>
 
-    const form = document.getElementById('notifyForm');
-    const note = document.getElementById('formNote');
-    form.addEventListener('submit', function(e){
-      e.preventDefault();
-      const email = document.getElementById('emailInput').value.trim();
-      if(email){
-        note.textContent = 'Your name has been sealed in the chronicle. We will summon you when the gates open.';
-        note.classList.add('ok');
-        form.reset();
-      }
+    <div class="showcase-thumbs">
+      <button class="thumb-arrow" id="prevBtn" type="button" aria-label="Previous character">‹</button>
+      <div class="thumbs" id="thumbsList" style="display:flex; gap:0.6rem;">
+        <button class="thumb active" data-char="mc" type="button" aria-label="The Wanderer"></button>
+        <button class="thumb" data-char="lyra" type="button" aria-label="Lyra"></button>
+        <button class="thumb" data-char="selva" type="button" aria-label="Selva"></button>
+        <button class="thumb" data-char="senna" type="button" aria-label="Senna"></button>
+      </div>
+      <button class="thumb-arrow" id="nextBtn" type="button" aria-label="Next character">›</button>
+    </div>
+  </div>
+</section>
+
+<!-- ================= COMBINITE ================= -->
+<section class="combinite" id="combinite">
+  <div class="eyebrow" style="justify-content:center;">The Signature Mechanic</div>
+  <h2 style="margin-top:1rem;">Play it once, it's just a card.<br/>Play it three times, it's a Combinite.</h2>
+  <p class="lede">Every card in your deck is hiding something. Line the same one up three times in a row and it stops being a card — it becomes a named attack, with its own cutscene, its own line of dialogue, its own reason to exist. There are dozens of these. We're only going to show you how it feels, not what they are.</p>
+
+  <div class="combo-stage">
+    <div class="combo-slots" id="slots">
+      <div class="slot" data-i="1"><span class="slot-index">I</span><span class="mark">?</span></div>
+      <div class="slot" data-i="2"><span class="slot-index">II</span><span class="mark">?</span></div>
+      <div class="slot" data-i="3"><span class="slot-index">III</span><span class="mark">?</span></div>
+    </div>
+    <button class="combo-btn" id="playCard" type="button">Play the card</button>
+    <div class="combo-result" id="comboResult">COMBINITE!</div>
+    <p class="combo-footnote">This is a practice card. In the full demo, it's your deck, your sequence, your discovery.</p>
+  </div>
+</section>
+
+<!-- ================= BESTIARY ================= -->
+<section class="bestiary" id="bestiary">
+  <div class="eyebrow">The Shallow Layer</div>
+  <h2 style="margin-top:1rem;">Everything down here is a slime.<br/>That should worry you more than it does.</h2>
+  <p class="lede">The first rooms of the Tower are full of them — small, disposable-looking, and each one built to ruin a different plan. Hover a seal to hear what people have said about them. We're keeping the numbers to ourselves.</p>
+
+  <div class="grid">
+    <div class="card" style="--card-glow: rgba(179,74,74,0.22)" tabindex="0">
+      <div class="name">Bomb Slime</div>
+      <div class="hint">It only wants one thing. It only gets one chance at it.</div>
+    </div>
+    <div class="card" style="--card-glow: rgba(79,209,197,0.22)" tabindex="0">
+      <div class="name">Crystal Slime</div>
+      <div class="hint">Kind to its friends. That's usually the problem.</div>
+    </div>
+    <div class="card" style="--card-glow: rgba(179,74,74,0.18)" tabindex="0">
+      <div class="name">Hungry Slime</div>
+      <div class="hint">It doesn't fight to win. It fights to eat.</div>
+    </div>
+    <div class="card" style="--card-glow: rgba(201,162,75,0.2)" tabindex="0">
+      <div class="name">Shield Slime</div>
+      <div class="hint">Somebody in that formation has to stand in front.</div>
+    </div>
+    <div class="card" style="--card-glow: rgba(201,162,75,0.22)" tabindex="0">
+      <div class="name">Split Slime</div>
+      <div class="hint">Kill it and you'll immediately understand your mistake.</div>
+    </div>
+    <div class="card" style="--card-glow: rgba(79,209,197,0.2)" tabindex="0">
+      <div class="name">Treasure Slime</div>
+      <div class="hint">Blink and it's gone — and it took everything with it.</div>
+    </div>
+    <div class="card locked" tabindex="0">
+      <div class="name">??? — Boss</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ROADMAP ================= -->
+<section class="roadmap" id="roadmap">
+  <div class="eyebrow">Where This Goes</div>
+  <h2 style="margin-top:1rem;">The path out of the Tower.</h2>
+
+  <div class="timeline">
+    <div class="stop active">
+      <div class="when">Sep 2026</div>
+      <div class="rail"><div class="dot"></div><div class="stem"></div></div>
+      <div>
+        <h3>Free Demo — itch.io</h3>
+        <p>No cost, no strings. Follow the account now so you don't find out about launch day the day after.</p>
+      </div>
+    </div>
+    <div class="stop">
+      <div class="when">Steam</div>
+      <div class="rail"><div class="dot"></div><div class="stem"></div></div>
+      <div>
+        <h3>Full Release — PC</h3>
+        <p>The complete climb, built on everything the demo teaches us.</p>
+      </div>
+    </div>
+    <div class="stop">
+      <div class="when">Later</div>
+      <div class="rail"><div class="dot"></div></div>
+      <div>
+        <h3>Mobile</h3>
+        <p>The Tower, in your pocket.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer id="follow">
+  <h2>The Tower doesn't wait for anyone.</h2>
+  <p class="lede">Follow along and be there when it opens.</p>
+  <div class="foot-ctas">
+    <a class="btn btn-gold" href="#">Follow on itch.io</a>
+    <a class="btn btn-ghost" href="#">Watch on YouTube</a>
+  </div>
+  <div class="socials">
+    <a href="#">TikTok</a>
+    <a href="#">YouTube</a>
+    <a href="#">X / Twitter</a>
+  </div>
+  <p class="fine">Blue Tower Chronicle — Kure Games. This page is a work in progress teaser and does not reflect final game content.</p>
+</footer>
+
+<script>
+  // Language toggle for hero tagline
+  const tagline = document.getElementById('tagline');
+  const langBtn = document.getElementById('langToggle');
+  const EN = "Every cycle, it wakes. Every cycle, it chooses who answers.";
+  const JP = "周期は目覚める。周期は応える者を選ぶ。";
+  let isJP = false;
+  langBtn.addEventListener('click', () => {
+    isJP = !isJP;
+    tagline.textContent = isJP ? JP : EN;
+    tagline.style.fontFamily = isJP ? "'Noto Serif JP', serif" : "var(--display)";
+    langBtn.textContent = isJP ? "Read in English" : "読む 日本語で";
+  });
+
+  // Character showcase
+  const CHAR_ORDER = ["mc", "lyra", "selva", "senna"];
+  const CHARACTERS = {
+    mc: {
+      name: "The Wanderer",
+      epithet: "The One Still Climbing",
+      quote: "\u201CI don\u2019t care what the Tower wants. I\u2019m finding her.\u201D",
+      lore: "Pulled through a door that shouldn't have opened, chasing a close friend who went through it first. He's climbing because she's still up there \u2014 not for glory, and not for anything the Tower thinks he should want.",
+      accent: "79,209,197",
+      /*
+      svg: `<svg viewBox="0 0 160 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="80" cy="86" r="66" stroke="#8a734a" stroke-width="0.8" opacity="0.5"/>
+        <path d="M80 20 L80 210 M14 86 L146 86" stroke="#4fd1c5" stroke-width="0.9" opacity="0.7"/>
+        <path d="M80 46 L112 86 L80 126 L48 86 Z" stroke="#e9e4d6" stroke-width="1" opacity="0.85"/>
+        <circle cx="80" cy="86" r="5" fill="#e9e4d6"/>
+        <path d="M80 140 C 54 162, 54 196, 80 224 C 106 196, 106 162, 80 140 Z" stroke="#4fd1c5" stroke-width="0.9" opacity="0.6"/>
+      </svg>`
+      */
+      svg: `<img src="char1.png" alt="The Wanderer" />`
+    },
+    lyra: {
+      name: "Lyra",
+      epithet: "Once of a Floor That's Gone",
+      quote: "\u201CSomeone has to remember what this floor used to guard.\u201D",
+      lore: "Once the guardian of a floor that no longer exists, standing watch in silver armor long after anyone remembered why. What found her down there didn't corrupt her \u2014 it woke something up. She hasn't decided yet whether that was a mercy.",
+      accent: "79,209,197",
+      svg: `<svg viewBox="0 0 160 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M80 26 L134 56 L134 130 C134 176 110 210 80 226 C50 210 26 176 26 130 L26 56 Z" stroke="#4fd1c5" stroke-width="1" opacity="0.7"/>
+        <path d="M80 26 L134 56 L134 130 C134 176 110 210 80 226 C50 210 26 176 26 130 L26 56 Z" stroke="#8a734a" stroke-width="0.5" opacity="0.4" transform="scale(0.86) translate(13,20)"/>
+        <line x1="80" y1="70" x2="80" y2="182" stroke="#e9e4d6" stroke-width="1.2" opacity="0.85"/>
+        <path d="M62 82 L98 82" stroke="#e9e4d6" stroke-width="0.9" opacity="0.6"/>
+        <circle cx="80" cy="70" r="4" fill="#e9e4d6"/>
+      </svg>`
+    },
+    selva: {
+      name: "Selva",
+      epithet: "The Silenced Stage",
+      quote: "\u201CThey erased my stage. They didn\u2019t erase my voice.\u201D",
+      lore: "A performer whose voice used to still an entire room. Her stage was erased in a war fought over ideals she never chose a side in. She came back from that changed \u2014 using the same beauty and the same melodies, now aimed at whoever silenced her.",
+      accent: "179,74,74",
+      svg: `<svg viewBox="0 0 160 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M80 34 C116 34 142 66 138 106 C134 150 106 196 80 220 C54 196 26 150 22 106 C18 66 44 34 80 34 Z" stroke="#b34a4a" stroke-width="1" opacity="0.65"/>
+        <path d="M46 106 C 64 82, 96 82, 114 106" stroke="#e9e4d6" stroke-width="0.9" opacity="0.6"/>
+        <path d="M46 130 C 64 154, 96 154, 114 130" stroke="#e9e4d6" stroke-width="0.9" opacity="0.5"/>
+        <circle cx="80" cy="118" r="4" fill="#e9e4d6"/>
+      </svg>`
+    },
+    senna: {
+      name: "Senna",
+      epithet: "Small, and Not to Be Underestimated",
+      quote: "\u201CIt's not a monster. It's just\u2026 very big.\u201D",
+      lore: "A child once locked away for a disaster she never meant to cause, until a coven of outcasts decided she was worth saving. Small enough to carry. Bonded to something far too large to explain, which tends to come up eventually.",
+      accent: "201,162,75",
+      svg: `<svg viewBox="0 0 160 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="80" cy="96" r="50" stroke="#c9a24b" stroke-width="1" opacity="0.7"/>
+        <path d="M38 180 C 54 158, 106 158, 122 180 C 134 200, 26 200, 38 180 Z" stroke="#e9e4d6" stroke-width="0.9" opacity="0.55"/>
+        <circle cx="64" cy="94" r="3" fill="#e9e4d6"/>
+        <circle cx="96" cy="94" r="3" fill="#e9e4d6"/>
+        <path d="M80 96 C 34 72, 10 24, 32 8" stroke="#c9a24b" stroke-width="0.7" opacity="0.4"/>
+        <path d="M80 96 C 126 72, 150 24, 128 8" stroke="#c9a24b" stroke-width="0.7" opacity="0.4"/>
+      </svg>`
+    }
+  };
+
+  const emblemBg = document.getElementById('emblemBg');
+  const charPortrait = document.getElementById('charPortrait');
+  const textPane = document.getElementById('textPane');
+  const charEpithet = document.getElementById('charEpithet');
+  const charName = document.getElementById('charName');
+  const charQuote = document.getElementById('charQuote');
+  const charLore = document.getElementById('charLore');
+  const shareBtn = document.getElementById('shareBtn');
+  const thumbsList = document.getElementById('thumbsList');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+
+  let activeChar = 'mc';
+
+  // Populate thumbnail icons once
+  CHAR_ORDER.forEach(key => {
+    const btn = thumbsList.querySelector(`[data-char="${key}"]`);
+    if (btn) btn.innerHTML = CHARACTERS[key].svg;
+  });
+
+  function renderChar(key){
+    const c = CHARACTERS[key];
+    charPortrait.innerHTML = c.svg;
+    charEpithet.textContent = c.epithet;
+    charName.textContent = c.name;
+    charQuote.textContent = c.quote;
+    charLore.textContent = c.lore;
+    shareBtn.innerHTML = `\u25C8 Copy link to ${c.name}`;
+    emblemBg.style.opacity = 0.16;
+    emblemBg.querySelectorAll('path,circle').forEach(el => el.setAttribute('stroke', `rgb(${c.accent})`));
+
+    thumbsList.querySelectorAll('.thumb').forEach(btn => {
+      const isActive = btn.dataset.char === key;
+      btn.classList.toggle('active', isActive);
+      btn.style.setProperty('--thumb-accent', `rgb(${c.accent})`);
     });
-  </script>
+  }
+
+  function selectChar(key){
+    if (key === activeChar) return;
+    activeChar = key;
+
+    charPortrait.classList.add('swap');
+    textPane.classList.add('swap');
+
+    setTimeout(() => {
+      renderChar(key);
+      charPortrait.classList.remove('swap');
+      textPane.classList.remove('swap');
+    }, 200);
+  }
+
+  thumbsList.addEventListener('click', (e) => {
+    const btn = e.target.closest('.thumb');
+    if (btn) selectChar(btn.dataset.char);
+  });
+
+  prevBtn.addEventListener('click', () => {
+    const i = CHAR_ORDER.indexOf(activeChar);
+    selectChar(CHAR_ORDER[(i - 1 + CHAR_ORDER.length) % CHAR_ORDER.length]);
+  });
+  nextBtn.addEventListener('click', () => {
+    const i = CHAR_ORDER.indexOf(activeChar);
+    selectChar(CHAR_ORDER[(i + 1) % CHAR_ORDER.length]);
+  });
+
+  shareBtn.addEventListener('click', () => {
+    const url = `${location.origin}${location.pathname}#characters-${activeChar}`;
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(url).catch(() => {});
+    }
+    const original = shareBtn.innerHTML;
+    shareBtn.innerHTML = '\u2713 Link copied';
+    setTimeout(() => { shareBtn.innerHTML = original; }, 1600);
+  });
+
+  renderChar('mc');
+
+  // Combinite interactive demo
+  const slots = Array.from(document.querySelectorAll('#slots .slot'));
+  const playBtn = document.getElementById('playCard');
+  const result = document.getElementById('comboResult');
+  let progress = 0;
+  let resetTimer = null;
+
+  function fillNext(){
+    if (progress >= 3) return;
+    progress++;
+    slots[progress-1].classList.add('filled');
+    slots[progress-1].querySelector('.mark').textContent = '✓';
+
+    if (progress === 3){
+      playBtn.disabled = true;
+      setTimeout(() => {
+        result.classList.add('show');
+        result.textContent = 'COMBINITE!';
+      }, 250);
+      resetTimer = setTimeout(resetCombo, 2600);
+    }
+  }
+
+  function resetCombo(){
+    progress = 0;
+    slots.forEach(s => {
+      s.classList.remove('filled');
+      s.querySelector('.mark').textContent = '?';
+    });
+    result.classList.remove('show');
+    playBtn.disabled = false;
+  }
+
+  playBtn.addEventListener('click', fillNext);
+</script>
+
 </body>
 </html>
