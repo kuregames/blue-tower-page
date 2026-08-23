@@ -455,48 +455,48 @@
      border:1px solid var(--line);
      border-radius:6px;
      background:linear-gradient(165deg, var(--panel), var(--void-soft));
+     background-size:contain;
+     background-position:top center;
+     background-repeat:no-repeat;
      overflow:hidden;
      padding:1rem;
      display:flex; flex-direction:column; justify-content:flex-end;
      cursor:default;
    }
-   .enemy-img{
-     width:100%;
-     height:auto;
-     object-fit:contain;
+   .card::before{
+     content:"";
+     position:absolute; inset:0;
+     background:radial-gradient(120px 120px at 50% 30%, var(--card-glow, rgba(79,209,197,0.16)), transparent 70%);
+     opacity:0.7;
+     transition:opacity .4s;
+   }
+   .card:hover::before{ opacity:1; }
+   .card .name{
+     font-family:var(--display); font-style:italic; font-size:1.15rem; color:var(--bone);
+     position:relative; z-index:1;
+     background:rgba(10,11,18,0.6);
+     padding:0.3rem 0.6rem;
+     border-radius:3px;
+     display:inline-block;
      margin-bottom:0.5rem;
    }
-   .card::before{
-    content:"";
-    position:absolute; inset:0;
-    background:radial-gradient(120px 120px at 50% 30%, var(--card-glow, rgba(79,209,197,0.16)), transparent 70%);
-    opacity:0.7;
-    transition:opacity .4s;
-  }
-  .card:hover::before{ opacity:1; }
-  .card .glyph{
-    position:absolute; top:14px; right:14px;
-    width:34px; height:34px;
-    opacity:0.5;
-  }
-  .card .name{
-    font-family:var(--display); font-style:italic; font-size:1.15rem; color:var(--bone);
-    position:relative; z-index:1;
-  }
-  .card .hint{
-    font-size:0.78rem; color:var(--bone-dim);
-    margin-top:0.5rem;
-    opacity:0; max-height:0; overflow:hidden;
-    transition:opacity .35s, max-height .35s, margin .35s;
-    position:relative; z-index:1;
-  }
-  .card:hover .hint, .card:focus-within .hint{
-    opacity:1; max-height:80px; margin-top:0.6rem;
-  }
-  .card.locked{
-    display:flex; align-items:center; justify-content:center; text-align:center;
-  }
-  .card.locked .name{ font-size:1rem; color:var(--bone-dim); }
+   .card .hint{
+     font-size:0.78rem; color:var(--bone-dim);
+     margin-top:0.5rem;
+     opacity:0; max-height:0; overflow:hidden;
+     transition:opacity .35s, max-height .35s, margin .35s;
+     position:relative; z-index:1;
+     background:rgba(10,11,18,0.5);
+     padding:0.4rem 0.6rem;
+     border-radius:3px;
+   }
+   .card:hover .hint, .card:focus-within .hint{
+     opacity:1; max-height:80px; margin-top:0.6rem;
+   }
+   .card.locked{
+     display:flex; align-items:center; justify-content:center; text-align:center;
+   }
+   .card.locked .name{ font-size:1rem; color:var(--bone-dim); }
 
   /* ---------- ROADMAP ---------- */
   .roadmap h2{ font-size:clamp(1.8rem,3.6vw,2.6rem); }
@@ -683,38 +683,31 @@
   <p class="lede">The first rooms of the Tower are full of them — small, disposable-looking, and each one built to ruin a different plan. Hover a seal to hear what people have said about them. We're keeping the numbers to ourselves.</p>
 
 <div class="grid">
-     <div class="card" style="--card-glow: rgba(179,74,74,0.22)" tabindex="0">
-       <img src="bomb-slime.png" alt="Bomb Slime" class="enemy-img">
+     <div class="card" style="--card-glow: rgba(179,74,74,0.22); background-image: url('bomb-slime.png');" tabindex="0">
        <div class="name">Bomb Slime</div>
        <div class="hint">It only wants one thing. It only gets one chance at it.</div>
      </div>
-     <div class="card" style="--card-glow: rgba(79,209,197,0.22)" tabindex="0">
-       <img src="crystal-slime.png" alt="Crystal Slime" class="enemy-img">
+     <div class="card" style="--card-glow: rgba(79,209,197,0.22); background-image: url('crystal-slime.png');" tabindex="0">
        <div class="name">Crystal Slime</div>
        <div class="hint">Kind to its friends. That's usually the problem.</div>
      </div>
-     <div class="card" style="--card-glow: rgba(179,74,74,0.18)" tabindex="0">
-       <img src="hungry-slime.png" alt="Hungry Slime" class="enemy-img">
+     <div class="card" style="--card-glow: rgba(179,74,74,0.18); background-image: url('hungry-slime.png');" tabindex="0">
        <div class="name">Hungry Slime</div>
        <div class="hint">It doesn't fight to win. It fights to eat.</div>
      </div>
-     <div class="card" style="--card-glow: rgba(201,162,75,0.2)" tabindex="0">
-       <img src="shield-slime.png" alt="Shield Slime" class="enemy-img">
+     <div class="card" style="--card-glow: rgba(201,162,75,0.2); background-image: url('shield-slime.png');" tabindex="0">
        <div class="name">Shield Slime</div>
        <div class="hint">Somebody in that formation has to stand in front.</div>
      </div>
-     <div class="card" style="--card-glow: rgba(201,162,75,0.22)" tabindex="0">
-       <img src="split-slime.png" alt="Split Slime" class="enemy-img">
+     <div class="card" style="--card-glow: rgba(201,162,75,0.22); background-image: url('split-slime.png');" tabindex="0">
        <div class="name">Split Slime</div>
        <div class="hint">Kill it and you'll immediately understand your mistake.</div>
      </div>
-     <div class="card" style="--card-glow: rgba(79,209,197,0.2)" tabindex="0">
-       <img src="treasure-slime.png" alt="Treasure Slime" class="enemy-img">
+     <div class="card" style="--card-glow: rgba(79,209,197,0.2); background-image: url('treasure-slime.png');" tabindex="0">
        <div class="name">Treasure Slime</div>
        <div class="hint">Blink and it's gone — and it took everything with it.</div>
      </div>
-     <div class="card locked" tabindex="0">
-       <img src="enemy-boss.png" alt="??? — Boss" class="enemy-img">
+     <div class="card locked" style="background-image: url('enemy-boss.png');" tabindex="0">
        <div class="name">??? — Boss</div>
      </div>
    </div>
