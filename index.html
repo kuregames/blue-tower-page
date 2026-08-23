@@ -101,11 +101,12 @@
     pointer-events:none;
   }
   .nav *{ pointer-events:auto; }
-  .nav-mark{ color:var(--bone); font-family:var(--display); font-size:1.05rem; letter-spacing:0.05em; font-style:italic; }
-  .nav-links{ display:flex; gap:2rem; }
-  .nav-links a{ text-decoration:none; color:var(--bone-dim); transition:color .25s; }
-  .nav-links a:hover{ color:var(--gold); }
-  @media (max-width:720px){ .nav-links{ display:none; } }
+.nav-mark{ display:flex; align-items:center; }
+   .nav-mark img{ height:48px; width:auto; }
+   .nav-links{ display:flex; gap:2rem; }
+   .nav-links a{ text-decoration:none; color:var(--bone-dim); transition:color .25s; }
+   .nav-links a:hover{ color:var(--gold); }
+   @media (max-width:720px){ .nav-links{ display:none; } }
 
   /* ---------- HERO ---------- */
   .hero{
@@ -549,7 +550,7 @@
 <body>
 
 <nav class="nav">
-  <span class="nav-mark">Blue Tower Chronicle</span>
+  <a href="#" class="nav-mark"><img src="logo.png" alt="Blue Tower Chronicle Logo"></a>
   <div class="nav-links">
     <a href="#premise">The Tower</a>
     <a href="#characters">Who's Inside</a>
