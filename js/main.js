@@ -1,152 +1,4 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Official Website Template</title>
-  <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-  <header class="site-header">
-    <a href="#main" class="brand" aria-label="Home"><span class="brand-fallback">Logo</span></a>
-    <nav class="nav" aria-label="Primary navigation">
-      <a class="active" href="index.html">Main</a>
-      <a href="world.html">World</a>
-      <a href="character.html">Characters</a>
-      <a href="news.html">News</a>
-      <a href="media.html">Media</a>
-    </nav>
-    <div class="header-actions">
-      <button class="icon-btn" aria-label="Language">◎</button>
-      <button class="icon-btn" aria-label="Notifications">●</button>
-      <button class="icon-btn" aria-label="Share">⌯</button>
-      <button class="icon-btn" aria-label="Music">♬</button>
-      <button class="cta">Apply for CBT</button>
-    </div>
-  </header>
-
-  <main>
-    <section id="main" class="section hero">
-      <div class="hero-slide active" aria-hidden="false"></div>
-      <div class="hero-slide" aria-hidden="true"></div>
-      <div class="hero-slide" aria-hidden="true"></div>
-      <div class="hero-overlay"></div>
-
-      <button class="arrow prev" data-hero-prev aria-label="Previous hero wallpaper">‹</button>
-      <button class="arrow next" data-hero-next aria-label="Next hero wallpaper">›</button>
-      <button class="hero-play section-reveal" data-open-video aria-label="Play video">▶</button>
-      <div class="hero-copy section-reveal"><small>magic</small>A new dream begins.</div>
-      <div class="dots hero-dots section-reveal" data-hero-dots></div>
-      <button class="cta hero-cta section-reveal">Apply for CBT</button>
-    </section>
-
-    <section id="world" class="section dark-section index-world-section section-reveal">
-      <h2 class="title">World</h2>
-      <div class="title-line"></div>
-      <button class="arrow prev" data-world-prev aria-label="Previous world">‹</button>
-      <div class="index-world-carousel" data-world-stage></div>
-      <button class="arrow next" data-world-next aria-label="Next world">›</button>
-      <div class="dots index-world-dots" data-world-dots></div>
-    </section>
-
-    <section id="characters" class="section index-character-section section-reveal">
-      <div class="index-character-bg-layer" data-character-bg></div>
-      <h2 class="title">Characters</h2>
-        <div class="index-character-stage">
-        <div class="index-character-art" data-character-art>
-          <div class="index-character-symbol" data-character-symbol></div>
-          <img src="assets/image/character-01.png" alt="Character artwork">
-        </div>
-        <div class="index-character-info" data-character-info>
-          <p class="index-character-group" data-character-group>✦ Ashen Dawn</p>
-          <h2 class="index-character-name" data-character-name>Vita Neri</h2>
-          <button class="cta">View More</button>
-          <div class="index-character-selector">
-            <button class="index-character-arrow" data-character-prev aria-label="Previous character">‹</button>
-            <div class="index-character-thumbs" data-character-thumbs></div>
-            <button class="index-character-arrow" data-character-next aria-label="Next character">›</button>
-          </div>
-          <div class="dots index-character-dots" data-character-dots></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="news" class="section light-section index-news-section section-reveal">
-      <h2 class="title">News</h2>
-      <div class="title-line"></div>
-      <div class="index-news-grid">
-        <article class="index-featured-card">
-          <span class="badge">FEATURED ✦ News</span>
-          <img data-news-image src="assets/image/news-featured-01.jpg" alt="Featured news">
-          <h3 class="index-featured-title" data-news-title>TGS 2026 Announcement</h3>
-          <div class="index-featured-date" data-news-date>2026.08.20</div>
-          <div class="mini-pager">
-            <button class="pager-button" data-news-prev aria-label="Previous featured news">‹</button>
-            <span data-news-pager>✦ • •</span>
-            <button class="pager-button" data-news-next aria-label="Next featured news">›</button>
-          </div>
-        </article>
-        <div>
-          <div class="index-news-list">
-            <article class="index-news-row"><span class="badge">News</span><span>TGS 2026 Announcement</span><time>2026.08.20</time></article>
-            <article class="index-news-row"><span class="badge">Notice</span><span>[CBT] Frequently Asked Questions</span><time>2026.08.19</time></article>
-            <article class="index-news-row"><span class="badge">Notice</span><span>Welcome to the Official Website</span><time>2026.05.07</time></article>
-          </div>
-          <button class="cta index-view-all">View All</button>
-        </div>
-      </div>
-    </section>
-
-    <section id="media" class="section dark-section index-media-section section-reveal">
-      <h2 class="title">Media</h2>
-      <div class="title-line"></div>
-      <div class="index-video-row">
-        <article class="index-video-card"><img data-video-card-image src="assets/image/media-video-01.jpg" alt="Character Introduction PV"><button class="index-play-small" data-open-video>▶</button><h3 data-video-card-title>Character Introduction PV</h3></article>
-        <article class="index-video-card"><img data-video-card-image src="assets/image/media-video-02.jpg" alt="Teaser PV"><button class="index-play-small" data-open-video>▶</button><h3 data-video-card-title>Teaser PV</h3></article>
-        <article class="index-video-card"><img data-video-card-image src="assets/image/media-video-03.jpg" alt="Super Teaser PV"><button class="index-play-small" data-open-video>▶</button><h3 data-video-card-title>Super Teaser PV</h3></article>
-      </div>
-      <div class="mini-pager">
-        <button class="pager-button" data-video-prev aria-label="Previous videos">‹</button>
-        <span data-video-pager>• ✦ •</span>
-        <button class="pager-button" data-video-next aria-label="Next videos">›</button>
-      </div>
-      <div class="index-asset-row">
-        <article class="index-asset-card"><img data-asset-card-image src="assets/image/media-asset-01.jpg" alt="Visual"><span class="tag" data-asset-card-tag>Visuals</span><h3 data-asset-card-title>Visual Title</h3></article>
-        <article class="index-asset-card"><img data-asset-card-image src="assets/image/media-asset-02.jpg" alt="Visual"><span class="tag" data-asset-card-tag>Visuals</span><h3 data-asset-card-title>Concept Art</h3></article>
-        <article class="index-asset-card"><img data-asset-card-image src="assets/image/media-asset-03.jpg" alt="Comic"><span class="tag" data-asset-card-tag>Comics</span><h3 data-asset-card-title>Comic Title</h3></article>
-        <article class="index-asset-card"><img data-asset-card-image src="assets/image/media-asset-04.jpg" alt="Comic"><span class="tag" data-asset-card-tag>Comics</span><h3 data-asset-card-title>Story Arc</h3></article>
-        <article class="index-asset-card"><img data-asset-card-image src="assets/image/media-asset-05.jpg" alt="Stamps"><span class="tag" data-asset-card-tag>Stamps</span><h3 data-asset-card-title>Official Stamp</h3></article>
-      </div>
-      <div class="mini-pager">
-        <button class="pager-button" data-asset-prev aria-label="Previous media assets">‹</button>
-        <span data-asset-pager>✦ • • • • •</span>
-        <button class="pager-button" data-asset-next aria-label="Next media assets">›</button>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer section-reveal">
-    <div class="socials"><a href="#">▶</a><a href="#">X</a><a href="#">✉</a></div>
-    <div class="footer-logo" aria-label="Logo"></div>
-    <div class="footer-links">
-      <a href="#">Privacy Policy</a>
-      <a href="#">Terms of Service</a>
-      <a href="#">Fan Content Guidelines</a>
-      <a href="#">Cookie Policy</a>
-      <a href="#">Service Agreement</a>
-    </div>
-    <p>© Company Name. All Rights Reserved.</p>
-  </footer>
-
-  <div class="modal" data-video-modal aria-hidden="true">
-    <div class="modal-box">
-      <button class="close" data-close-video aria-label="Close video">×</button>
-      <video src="assets/image/video-01.mp4" controls></video>
-    </div>
-  </div>
-
-  <script>
-    document.body.classList.add('js-reveal');
+document.body.classList.add('js-reveal');
     const revealItems = document.querySelectorAll('.section-reveal');
     const revealObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -221,12 +73,28 @@
     setNews(0);
 
     const worldData = [
-      { title: "Tokyo '89", image: 'assets/image/world-01.jpg' },
-      { title: 'Astrae Oratio', image: 'assets/image/world-02.jpg' },
-      { title: 'Magicians', image: 'assets/image/world-03.jpg' }
+      {
+        title: 'Blue Tower',
+        image: 'assets/image/world-01.jpg',
+        quote: 'A sky-piercing tower where every door opens into a different fate.',
+        body: 'The Blue Tower appears after the world fractures. Rei enters through the weakest blue door and finds a lobby where factions, relics, and lost travelers gather before climbing into unknown floors.'
+      },
+      {
+        title: 'Entrance Lobby',
+        image: 'assets/image/world-02.jpg',
+        quote: 'A quiet ground floor where strangers become allies, rivals, or warnings.',
+        body: 'The lobby is the first safe place inside the tower. Here, summoned people trade rumors, prepare decks, choose routes, and decide which faction door is worth trusting.'
+      },
+      {
+        title: 'Faction Doors',
+        image: 'assets/image/world-03.jpg',
+        quote: 'Color, crest, and oath decide how a climber survives.',
+        body: 'Each door represents a faction identity and battle style. Blue favors direct strength, White protects and restores, Black spreads fear and summons, while other doors twist combat through buffs, debuffs, and risk.'
+      }
     ];
     const worldStage = document.querySelector('[data-world-stage]');
     const worldDots = document.querySelector('[data-world-dots]');
+    const worldCopy = document.querySelector('[data-world-copy]');
     let worldIndex = 1;
 
     function renderWorld(index, animate = false) {
@@ -240,10 +108,12 @@
         order.forEach((dataIndex) => {
           const item = worldData[dataIndex];
           const card = document.createElement('article');
-          card.className = `index-world-card${dataIndex === worldIndex ? ' active' : ''}`;
+          card.className = `world-card${dataIndex === worldIndex ? ' active' : ''}`;
           card.innerHTML = `<h3>${item.title}</h3><img src="${item.image}" alt="${item.title}">`;
           worldStage.appendChild(card);
         });
+        const active = worldData[worldIndex];
+        worldCopy.innerHTML = `<h3>${active.title}</h3><blockquote>&quot;${active.quote}&quot;</blockquote><p>${active.body}</p>`;
         makeDots(worldDots, worldData.length, worldIndex, (dotIndex) => renderWorld(dotIndex, true));
         requestAnimationFrame(() => {
           worldStage.classList.remove('is-changing');
@@ -279,7 +149,7 @@
       characterThumbs.innerHTML = '';
       characters.forEach((character, i) => {
         const button = document.createElement('button');
-        button.className = `index-character-thumb${i === characterIndex ? ' active' : ''}`;
+        button.className = `thumb${i === characterIndex ? ' active' : ''}`;
         button.type = 'button';
         button.innerHTML = `<img src="${character.thumb}" alt="${character.name} thumbnail">`;
         button.addEventListener('click', () => setCharacter(i));
@@ -402,6 +272,3 @@
         video.pause();
       }
     });
-  </script>
-</body>
-</html>

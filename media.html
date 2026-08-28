@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Media | Blue Tower Chronicle</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a href="index.html#main" class="brand" aria-label="Home"><span>Blue Tower Chronicle</span></a>
+    <nav class="nav" aria-label="Primary navigation">
+      <a href="index.html">Main</a>
+      <a href="world.html">World</a>
+      <a href="character.html">Characters</a>
+      <a href="news.html">News</a>
+      <a class="active" href="media.html">Media</a>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-btn" aria-label="Language">◎</button>
+      <button class="icon-btn" aria-label="Notifications">●</button>
+      <button class="icon-btn" aria-label="Share">⌯</button>
+      <button class="icon-btn is-muted" aria-label="Music">♬</button>
+      <button class="cta">Apply for CBT</button>
+    </div>
+  </header>
+
+  <main class="page-media">
+    <section class="media-inner" aria-label="Media list">
+      <div class="page-tabs" role="tablist" aria-label="Media filter">
+        <button class="tab-button active" type="button" data-media-filter="videos"><span>Videos</span></button>
+        <button class="tab-button" type="button" data-media-filter="visuals"><span>Visuals</span></button>
+        <button class="tab-button" type="button" data-media-filter="comics"><span>Comics</span></button>
+        <button class="tab-button" type="button" data-media-filter="stamps"><span>Stamps</span></button>
+      </div>
+
+      <ul class="media-grid">
+        <li data-media-item data-media-kind="videos">
+          <a class="media-card" href="#">
+            <span class="media-thumb">
+              <img src="assets/image/media-video-01.jpg" alt="Character introduction PV thumbnail">
+              <span class="play-button" aria-hidden="true"></span>
+            </span>
+            <strong class="media-title">Character Introduction PV</strong>
+          </a>
+        </li>
+
+        <li data-media-item data-media-kind="videos">
+          <a class="media-card" href="#">
+            <span class="media-thumb">
+              <img src="assets/image/media-video-02.jpg" alt="Teaser PV thumbnail">
+              <span class="play-button" aria-hidden="true"></span>
+            </span>
+            <strong class="media-title">Teaser PV</strong>
+          </a>
+        </li>
+
+        <li data-media-item data-media-kind="videos">
+          <a class="media-card" href="#">
+            <span class="media-thumb">
+              <img src="assets/image/media-video-03.jpg" alt="Super teaser PV thumbnail">
+              <span class="play-button" aria-hidden="true"></span>
+            </span>
+            <strong class="media-title">Super Teaser PV</strong>
+          </a>
+        </li>
+
+        <li data-media-item data-media-kind="visuals" hidden>
+          <a class="media-card" href="#">
+            <span class="media-thumb"><img src="assets/image/media-asset-01.jpg" alt="Key visual artwork"></span>
+            <strong class="media-title">Main Key Visual</strong>
+          </a>
+        </li>
+
+        <li data-media-item data-media-kind="visuals" hidden>
+          <a class="media-card" href="#">
+            <span class="media-thumb"><img src="assets/image/media-asset-02.jpg" alt="Character visual artwork"></span>
+            <strong class="media-title">Character Visual Collection</strong>
+          </a>
+        </li>
+
+        <li data-media-item data-media-kind="comics" hidden>
+          <a class="media-card" href="#">
+            <span class="media-thumb"><img src="assets/image/media-asset-03.jpg" alt="Comic thumbnail"></span>
+            <strong class="media-title">Blue Tower Mini Comic #01</strong>
+          </a>
+        </li>
+
+        <li data-media-item data-media-kind="stamps" hidden>
+          <a class="media-card" href="#">
+            <span class="media-thumb"><img src="assets/image/media-asset-04.jpg" alt="Stamp set thumbnail"></span>
+            <strong class="media-title">Blue Tower Stamp Set</strong>
+          </a>
+        </li>
+      </ul>
+
+      <div class="bottom-rail">
+        <div class="bottom-line-group">
+          <span class="bottom-line"></span>
+          <span class="bottom-sparkle">✦</span>
+          <span class="bottom-line"></span>
+        </div>
+        <button class="more-button" type="button"><span>More +</span></button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-socials">
+      <a href="#" aria-label="YouTube">▶</a>
+      <a href="#" aria-label="X">X</a>
+      <a href="#" aria-label="Email">✉</a>
+    </div>
+    <div class="footer-divider"></div>
+    <div class="footer-logo" aria-label="Logo"></div>
+    <nav class="footer-links" aria-label="Footer navigation">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Fan Content Guidelines</a>
+      <a href="#">Cookie Policy</a>
+      <a href="#">Service Agreement</a>
+    </nav>
+    <p>© Blue Tower Chronicle. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    const filterButtons = [...document.querySelectorAll('[data-media-filter]')];
+    const mediaItems = [...document.querySelectorAll('[data-media-item]')];
+
+    filterButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const filter = button.dataset.mediaFilter;
+        filterButtons.forEach((item) => item.classList.toggle('active', item === button));
+        mediaItems.forEach((item) => {
+          item.hidden = item.dataset.mediaKind !== filter;
+        });
+      });
+    });
+  </script>
+</body>
+</html>
